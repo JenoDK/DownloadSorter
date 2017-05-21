@@ -10,6 +10,7 @@ def main() :
             if (season_episode[2] != 'NO MATCH'):
                 print()
                 index_of_s_and_e = file_path.index(season_episode[2])
+                print(file)
                 print(file_path[re.search(root, file_path).end() + 1:index_of_s_and_e])
                 print('Season ' + str(season_episode[0]) + ' episode ' + str(season_episode[1]))
             else:
@@ -23,7 +24,7 @@ def find_name(file_or_dir):
     SXEX_match = re.search('[S]\d\d[E]\d\d', file_or_dir)
     sxex_match = re.search('[s]\d\d[e]\d\d', file_or_dir)
     x_match = re.search('\d\d[x]\d\d', file_or_dir)
-    of_match = re.search('\d[of]\d', file_or_dir)
+    of_match = re.search('\dof\d', file_or_dir)
     if SXEX_match:
         return handle_match(SXEX_match, 1, 3, 4, 6)
     elif sxex_match:
@@ -31,7 +32,8 @@ def find_name(file_or_dir):
     elif x_match:
         return handle_match(x_match, 0, 2, 3, 5)
     elif of_match:
-        return handle_match(of_match, 0, 1, 3, 4)
+        e_s_season = handle_match(of_match, 0, 1, 3, 4)
+        return [e_s_season[1], e_s_season[0], e_s_season[2]]
     else:
         return [0, 0, 'NO MATCH']
 
